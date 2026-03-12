@@ -1,0 +1,2 @@
+application,cpu_usage,ram_usage_mb,process_count,disk_io_mb,sustainability_score,timestamp
+code.exe,0.0,2310.36,12,3001.77,8.23,2026-03-12 21:20:15.667699

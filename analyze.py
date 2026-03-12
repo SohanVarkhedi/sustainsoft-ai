@@ -1,6 +1,7 @@
 from backend.monitor.process_scanner import get_running_applications
 from backend.monitor.resource_monitor import monitor_application
 from backend.scoring.sustainability_score import calculate_sustainability_score, efficiency_label
+from backend.models.data_logger import log_analysis
 
 
 def main():
@@ -22,7 +23,7 @@ def main():
         stats["process_count"],
         stats["disk_io_mb"]
     )
-
+    log_analysis(stats, score)
     efficiency = efficiency_label(score)
 
     print("\nApplication Analysis\n")

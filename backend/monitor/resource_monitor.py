@@ -17,7 +17,7 @@ def monitor_application(app_name):
 
                 process_count += 1
 
-                cpu_total += process.cpu_percent(interval=0.1)
+                cpu_total += process.cpu_percent(interval=0.5)
 
                 ram_total += process.info['memory_info'].rss
 
