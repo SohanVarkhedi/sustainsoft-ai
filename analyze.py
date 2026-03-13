@@ -1,5 +1,6 @@
 import os
 import joblib
+import pandas as pd
 
 from backend.monitor.process_scanner import get_running_applications
 from backend.monitor.resource_monitor import monitor_application
@@ -25,8 +26,10 @@ def main():
 
     app_name = input("\nEnter application name to analyze: ")
 
+    # Monitor application resources
     stats = monitor_application(app_name)
 
+    # Formula-based sustainability score
     score = calculate_sustainability_score(
         stats["cpu_usage"],
         stats["ram_usage_mb"],
@@ -36,20 +39,23 @@ def main():
 
     efficiency = efficiency_label(score)
 
+    # Log data to dataset
     log_analysis(stats, score)
 
+    # ML prediction
     ml_score = None
 
     if model:
-        features = [[
-            stats["cpu_usage"],
-            stats["ram_usage_mb"],
-            stats["process_count"],
-            stats["disk_io_mb"]
-        ]]
+        features = pd.DataFrame([{
+            "cpu_usage": stats["cpu_usage"],
+            "ram_usage_mb": stats["ram_usage_mb"],
+            "process_count": stats["process_count"],
+            "disk_io_mb": stats["disk_io_mb"]
+        }])
 
         ml_score = round(model.predict(features)[0], 2)
 
+    # Output results
     print("\nApplication Analysis")
     print("-----------------------")
 
